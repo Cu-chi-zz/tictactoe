@@ -14,7 +14,8 @@ func main() {
 	tourCounter := 1
 	for tourCounter <= 9 {
 		scanner := bufio.NewScanner(os.Stdin)
-		if tourCounter == 1 {
+
+		if tourCounter%2 != 0 { // Odd = Player 1 - Even = Player 2
 			fmt.Println("Joueur 1:")
 			scanner.Scan()
 			placeChoose, err := strconv.Atoi(scanner.Text())
@@ -29,7 +30,7 @@ func main() {
 			}
 			place(1, placeChoose)
 			tourCounter++
-		} else if tourCounter == 2 {
+		} else {
 			fmt.Println("Joueur 2:")
 			scanner.Scan()
 			placeChoose, err := strconv.Atoi(scanner.Text())
@@ -43,111 +44,6 @@ func main() {
 				continue
 			}
 			place(2, placeChoose)
-			tourCounter++
-		} else if tourCounter == 3 {
-			fmt.Println("Joueur 1:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(1, placeChoose)
-			tourCounter++
-		} else if tourCounter == 4 {
-			fmt.Println("Joueur 2:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(2, placeChoose)
-			tourCounter++
-		} else if tourCounter == 5 {
-			fmt.Println("Joueur 1:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(1, placeChoose)
-			tourCounter++
-		} else if tourCounter == 6 {
-			fmt.Println("Joueur 2:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(2, placeChoose)
-			tourCounter++
-		} else if tourCounter == 7 {
-			fmt.Println("Joueur 1:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(1, placeChoose)
-			tourCounter++
-		} else if tourCounter == 8 {
-			fmt.Println("Joueur 2:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(2, placeChoose)
-			tourCounter++
-		} else if tourCounter == 9 {
-			fmt.Println("Joueur 1:")
-			scanner.Scan()
-			placeChoose, err := strconv.Atoi(scanner.Text())
-			if err != nil || placeChoose > 9 {
-				fmt.Println("Merci d'entrer un nombre valide")
-				continue
-			}
-
-			if checkIfAlreadyPlayed(placeChoose) {
-				fmt.Println("Cette case est déjà jouée")
-				continue
-			}
-			place(1, placeChoose)
 			tourCounter++
 		}
 
@@ -173,84 +69,32 @@ func displayGame() {
 }
 
 func place(fromPlayer int, position int) {
-	if fromPlayer == 1 {
-		if position == 1 {
-			jeu[0][0] = "X"
-		} else if position == 2 {
-			jeu[0][1] = "X"
-		} else if position == 3 {
-			jeu[0][2] = "X"
-		} else if position == 4 {
-			jeu[1][0] = "X"
-		} else if position == 5 {
-			jeu[1][1] = "X"
-		} else if position == 6 {
-			jeu[1][2] = "X"
-		} else if position == 7 {
-			jeu[2][0] = "X"
-		} else if position == 8 {
-			jeu[2][1] = "X"
-		} else if position == 9 {
-			jeu[2][2] = "X"
-		}
-	} else {
-		if position == 1 {
-			jeu[0][0] = "O"
-		} else if position == 2 {
-			jeu[0][1] = "O"
-		} else if position == 3 {
-			jeu[0][2] = "O"
-		} else if position == 4 {
-			jeu[1][0] = "O"
-		} else if position == 5 {
-			jeu[1][1] = "O"
-		} else if position == 6 {
-			jeu[1][2] = "O"
-		} else if position == 7 {
-			jeu[2][0] = "O"
-		} else if position == 8 {
-			jeu[2][1] = "O"
-		} else if position == 9 {
-			jeu[2][2] = "O"
-		}
+	char := "X"
+	fmt.Println(fromPlayer)
+	if fromPlayer == 2 {
+		char = "O"
+	}
+
+	if position == 1 || position == 2 || position == 3 {
+		jeu[0][position-1] = char
+	} else if position == 4 || position == 5 || position == 6 {
+		jeu[1][position-1] = char
+	} else if position == 7 || position == 8 || position == 9 {
+		jeu[2][position-1] = char
 	}
 }
 
 func checkIfAlreadyPlayed(position int) bool {
-	if position == 1 {
-		if jeu[0][0] != "0" {
+	if position == 1 || position == 2 || position == 3 {
+		if jeu[0][position-1] != "0" {
 			return true
 		}
-	} else if position == 2 {
-		if jeu[0][1] != "0" {
+	} else if position == 4 || position == 5 || position == 6 {
+		if jeu[1][position-1] != "0" {
 			return true
 		}
-	} else if position == 3 {
-		if jeu[0][2] != "0" {
-			return true
-		}
-	} else if position == 4 {
-		if jeu[1][0] != "0" {
-			return true
-		}
-	} else if position == 5 {
-		if jeu[1][1] != "0" {
-			return true
-		}
-	} else if position == 6 {
-		if jeu[1][2] != "0" {
-			return true
-		}
-	} else if position == 7 {
-		if jeu[2][0] != "0" {
-			return true
-		}
-	} else if position == 8 {
-		if jeu[2][1] != "0" {
-			return true
-		}
-	} else if position == 9 {
-		if jeu[2][2] != "0" {
+	} else if position == 7 || position == 8 || position == 9 {
+		if jeu[2][position-1] != "0" {
 			return true
 		}
 	}
